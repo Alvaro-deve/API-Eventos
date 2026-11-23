@@ -160,4 +160,27 @@ router.put('/entradas/:idEvento/:tipoEntrada/:cantidad', async(req, res) => {
 
 })
 
+router.get('/recinto/:id', async(req,res) => {
+
+    try{
+    const id = req.params.id;
+    const resultado = await Evento.find({recinto: id} ).populate('recinto');
+    if(!resultado)
+    {
+        return res.status(404).send({ok: false, error: "Puta madre coño"});
+    } else return res.status(200).send({ok: true, resultado: resultado});
+    }catch(error){
+        return res.status(500).res.send({ok: false, error: "eror base de datos"});
+    }
+    
+
+
+
+
+
+
+
+
+})
+
 export default router;
