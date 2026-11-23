@@ -164,7 +164,7 @@ router.get('/recinto/:id', async(req,res) => {
 
     try{
     const id = req.params.id;
-    const resultado = await Evento.find({recinto: id} ).populate('recinto');
+    const resultado = await Evento.find({recinto: id} );
     if(!resultado)
     {
         return res.status(404).send({ok: false, error: "Puta madre coño"});
