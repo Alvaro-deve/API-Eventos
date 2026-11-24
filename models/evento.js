@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Recinto from './recinto.js';
 
-const entradaSchema = new mongodb.Schema({
+const entradaSchema = new mongoose.Schema({
     tipo: {
         type: String,
         required: true,
@@ -19,7 +19,7 @@ const entradaSchema = new mongodb.Schema({
     }
 });
 
-const eventoSchema = new mongodb.Schema({
+const eventoSchema = new mongoose.Schema({
     nombre: {
         type: String,
         required: true,
