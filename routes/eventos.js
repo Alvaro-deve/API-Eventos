@@ -80,6 +80,31 @@ router.post('/', async(req, res) => {
 
 })
 
+router.delete('/localidad/:localidad', async (req,res) => {
+
+    try
+        {
+            const idRecintos = await Recinto.find({localidad: req.params.localidad}, '_id').then(recintos => {
+                 return recintos.map(r => r._id)
+            })
+        
+
+        const resultado = await Evento.deleteMany({recinto: {$in: idRecintos}}).then(resultado => {
+            if(resultado.deletedCount === 0)
+                return res.status(500).send({ok: false, error: 'No hay eventos con esa localidad'});
+            res.status(200).send({ok:true, resultado: resultado})
+        }
+        )
+    }catch(error){
+        res.status(500).send({ok:true, error: error})
+    }
+
+
+
+
+
+})
+
 
 router.put('/:id', async(req, res) => {
 
