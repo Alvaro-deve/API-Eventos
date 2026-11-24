@@ -56,7 +56,7 @@ router.get('/localidad/:nombre', async(req, res) => {
     })
 
     }catch(error){
-        res.status(404).send({ok: false, error: error});
+        res.status(500).send({ok: false, error: error});
     } 
 
 
