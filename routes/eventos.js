@@ -44,21 +44,21 @@ router.get('/:id', async(req, res) => {
 router.get('/localidad/:nombre', async(req, res) => {
 
     try{
-        const resultado = await Evento.find({fecha: {$gte: new Date()}}).populate({
-            path: 'recinto',
-            match: {localidad: req.params.nombre}
-        });
+    await Recintos.find({localidad: req.params.nombre}, "_id").then((recintos) => {
 
-        const filtrado = resultado.filter(evento => evento.recinto !== null);
+        const resultado = Evento.find({recinto: { $in: recintos.id}});
 
-        if(filtrado.length === 0)
-            return res.status(404).send({ok: false, error: "No se han encontrado eventos"});
+        if(!resultado)
+            return res.status(404).send({ok: false, error: "No se ha enontrado eventos en la localidad: " + req.params.localidad})
 
-        res.status(200).send({ok: true, resultado: filtrado});
+        res.status(200).send({ok: true, resultado: resultado})
+
+    })
 
     }catch(error){
-        res.status(404).send({ok: false, error: "No se han encontrado eventos"});
-    }
+        res.status(404).send({ok: false, error: error});
+    } 
+
 
 })
 

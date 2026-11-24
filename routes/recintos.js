@@ -98,19 +98,27 @@ router.put('/:id', async (req, res) => {
 
 })
 
-router.delete('/:id', async (req,res) => {
+router.delete('/:id', async (req, res) => {
+  try {
+    const recinto = await Recinto.findById(req.params.id);
 
-const recinto = await Recinto.findById(req.params.id);
+    if (!recinto) {
+      return res.status(404).send({
+        ok: false,
+        error: `Recinto ${req.params.id} no encontrado`
+      });
+    }
 
-if(!recinto)
-{
-    res.status(404).send({ok:false, error: "No se ha encontrao este:" + req.params.id})
-} else {
-    Recinto.deleteOne({id: req.params.id})
-    res.status(200).send({ok: true, resultado: "Borrado: " + recinto.id})
-}
+    await Recinto.deleteOne({ _id: req.params.id });
 
-
-})
+    res.status(200).send({ ok: true, resultado: recinto });
+  } catch (error) {
+    res.status(500).send({
+      ok: false,
+      error: 'El identificador no tiene un formato válido'
+    });
+  }
+});
 
 export default router;
+
