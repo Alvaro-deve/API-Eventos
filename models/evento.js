@@ -1,4 +1,4 @@
-import mongodb from 'mongoose';
+import mongoose from 'mongoose';
 import Recinto from './recinto.js';
 
 const entradaSchema = new mongodb.Schema({
@@ -32,7 +32,7 @@ const eventoSchema = new mongodb.Schema({
     },
     entradas: [entradaSchema],
     recinto: {
-        type: mongodb.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Recinto',
         required: true
     }
@@ -40,4 +40,4 @@ const eventoSchema = new mongodb.Schema({
 
 
 
-export default mongodb.model('Evento', eventoSchema);
+export default mongoose.model('Evento', eventoSchema);

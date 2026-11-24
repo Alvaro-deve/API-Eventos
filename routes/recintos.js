@@ -98,19 +98,18 @@ router.put('/:id', async (req, res) => {
 
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req,res) => {
 
-    try{
-        const resultado = await Recinto.findByIdAndDelete(req.params.id);
+const recinto = Recinto.findById(req.params.id);
 
-        if(!resultado)
-            return res.status(404).send({ok: false, error: `Error eliminando recinto ${req.params.id}`});
+if(!recinto)
+{
+    res.status(404).send({ok:false, error: "No se ha encontrao este:" + req.params.id})
+} else {
+    Recinto.delete({id: req.params.id})
+    res.status(200).send({ok: true, resultado: recinto})
+}
 
-        res.status(200).send({ok: true, resultado: resultado});
-
-    }catch(error){
-        res.status(404).send({ok: false, error: `Error eliminando recinto ${req.params.id}`});
-    }
 
 })
 

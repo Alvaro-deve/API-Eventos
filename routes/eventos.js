@@ -165,22 +165,14 @@ router.get('/recinto/:id', async(req,res) => {
     try{
     const id = req.params.id;
     const resultado = await Evento.find({recinto: id} );
-    if(!resultado)
+    if(resultado.length === 0)
     {
-        return res.status(404).send({ok: false, error: "Puta madre coño"});
+        return res.status(404).send({ok: false, error: "No se han encontrado eventos para ese recinto"});
     } else return res.status(200).send({ok: true, resultado: resultado});
     }catch(error){
-        return res.status(500).res.send({ok: false, error: "eror base de datos"});
+        return res.status(500).send({ok: false, error: "Error de base de datos"});
     }
     
-
-
-
-
-
-
-
-
 })
 
 export default router;
