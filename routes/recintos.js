@@ -100,14 +100,14 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req,res) => {
 
-const recinto = Recinto.findById(req.params.id);
+const recinto = await Recinto.findById(req.params.id);
 
 if(!recinto)
 {
     res.status(404).send({ok:false, error: "No se ha encontrao este:" + req.params.id})
 } else {
-    Recinto.delete({id: req.params.id})
-    res.status(200).send({ok: true, resultado: recinto})
+    Recinto.deleteOne({id: req.params.id})
+    res.status(200).send({ok: true, resultado: "Borrado: " + recinto.id})
 }
 
 
