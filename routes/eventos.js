@@ -1,7 +1,7 @@
 
 import express from 'express';
 import Evento from '../models/evento.js';
-
+import Recinto from '../models/recinto.js'
 
 const router = express.Router();
 
@@ -44,7 +44,7 @@ router.get('/:id', async(req, res) => {
 router.get('/localidad/:nombre', async(req, res) => {
 
     try{
-    const idsRecintos = await Recintos.find({localidad: req.params.nombre}, "_id");
+    const idsRecintos = await Recinto.find({localidad: req.params.nombre}, "_id");
 
     const resultado = await Evento.find({recinto: {$in: idsRecintos.map(recinto => recinto._id)}}).populate('recinto')
 
