@@ -46,7 +46,7 @@ router.get('/localidad/:nombre', async(req, res) => {
     try{
     const idsRecintos = await Recintos.find({localidad: req.params.nombre}, "_id");
 
-    const resultado = await Evento.find({recinto: {$in: idsRecintos}}).populate('recinto')
+    const resultado = await Evento.find({recinto: {$in: idsRecintos.map(recinto => recinto._id)}}).populate('recinto')
 
     if (resultado.length === 0) {
       return res.status(404).send({
